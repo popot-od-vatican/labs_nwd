@@ -6,6 +6,7 @@ class ChartService {
     let interval;
     let startDate;
 
+    console.log('Chart Service: period', period);
     // Set the interval and start date based on the selected period
     switch (period) {
       case "1DAY":

@@ -12,8 +12,6 @@ onMounted(() => {
 </script>
 
 <template>
-  
   <NavbarComponent/>
   <router-view></router-view>
-  </template>
-
+</template>

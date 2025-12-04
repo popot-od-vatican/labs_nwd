@@ -52,6 +52,7 @@ const chartOptions = {
 const fetchChartData = async () => {
   for (const coin of topCoins.value) {
     try {
+      console.log('coin:', coin);
       const response = await ChartService.getChart(coin.id, selectedCoinData.value);
 
       const chartArray = response.data?.data;
@@ -62,11 +63,14 @@ const fetchChartData = async () => {
           price: parseFloat(entry.priceUsd),
         }));
 
+        console.log('coin_colors:2', coinColors2);
+
         chartData.value[coin.id] = {
           labels: prices.map((entry) => entry.date),
           datasets: [
             {
               label: `${coin.symbol} Цена во USD`,
+              // iskomentiraj go ova ako dava undefined e za backgroundColor 
               backgroundColor: coinColors2.value[coin.id].backgroundColor,
               borderColor: coinColors2.value[coin.id].borderColor,
               borderWidth: 2,
@@ -118,6 +122,15 @@ function formatPrice(price) {
     <h1 className="font-bold text-white w-full text-center mb-4 text-3xl">
       Today's most popular coins chart
     </h1>
+
+    <div>
+      <label className="text-white">Time: </label>
+      <select v-model="selectedCoinData" @change="fetchChartData">
+        <option selected value="1DAY">1 hour</option>
+        <option value="7DAY">1 week</option>
+        <option value="1MTH">1 month</option>
+      </select>
+    </div>
 
     <div v-for="coin in topCoins" :key="coin.id" className="w-[45%] mb-6">
       <h2 class="text-white font-bold text-center mb-2">{{ coin.symbol }} Price</h2>
